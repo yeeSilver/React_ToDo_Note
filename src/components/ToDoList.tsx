@@ -62,9 +62,13 @@ export default function ToDoList() {
         </Select>
         <Box>
           <CreateToDo />
-          {toDos?.map((toDo) => (
-            <ToDo key={toDo.id} {...toDo} />
-          ))}
+          {toDos.length ? (
+            toDos.map((toDo) => <ToDo key={toDo.id} {...toDo} />)
+          ) : (
+            <p style={{ color: "orange" }}>
+              There is NOTHING! 👻Add your first thing
+            </p>
+          )}
         </Box>
       </Container>
     </div>
