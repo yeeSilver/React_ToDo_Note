@@ -1,8 +1,38 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import styled from "styled-components";
 import { Categories, categoryState, toDoSelector, toDoState } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #4a4a46a4;
+  padding: 50px;
+  font-weight: 500;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+`;
+
+const Title = styled.h1`
+  font-size: 42px;
+`;
+
+const Select = styled.select`
+  width: 350px;
+  background-color: #4a4a46a4;
+  color: ivory;
+  padding: 10px;
+  margin: 10px 0 20px;
+`;
+
+const Box = styled.div`
+  width: 350px;
+  background-color: #4a4a46a4;
+  padding: 10px;
+`;
 
 export default function ToDoList() {
   //useRecoilValue(toDoSelector)의 반환값은 배열임.배열 안에 카테고리 별 배열을 꺼내기 위해 배열을 열어야 함 따라서 const [...내용...]를 해주는 거임
@@ -13,20 +43,30 @@ export default function ToDoList() {
     setCategory(event.currentTarget.value as any);
   };
   return (
-    <div>
-      <h1>📑TO Do List</h1>
-      <hr />
-      {/* Input값에만 해당 */}
-      <select value={category} onInput={onInput}>
-        <option value={Categories.TO_DO}>TO DO</option>
-        <option value={Categories.DOING}>DOING</option>
-        <option value={Categories.DONE}>DONE</option>
-      </select>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Container>
+        <Title>TO DO LIST</Title>
 
-      <CreateToDo />
-      {toDos?.map((toDo) => (
-        <ToDo key={toDo.id} {...toDo} />
-      ))}
+        {/* Input값에만 해당 */}
+        <Select value={category} onInput={onInput}>
+          <option value={Categories.TO_DO}>TO DO</option>
+          <option value={Categories.DOING}>DOING</option>
+          <option value={Categories.DONE}>DONE</option>
+        </Select>
+        <Box>
+          <CreateToDo />
+          {toDos?.map((toDo) => (
+            <ToDo key={toDo.id} {...toDo} />
+          ))}
+        </Box>
+      </Container>
     </div>
   );
 }
